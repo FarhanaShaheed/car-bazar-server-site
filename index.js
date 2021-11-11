@@ -23,12 +23,23 @@ async function run(){
         const carCollection = database.collection('cars');
         const bookingCollection = database.collection('bookings');
         const usersCollection = database.collection('users');
+        const reviewsCollection = database.collection('reviews');
         //GET API FOR CAR
         app.get('/cars', async(req,res) =>{
             const cursor = carCollection.find({});
             const cars = await cursor.toArray();
             res.send(cars);
         })
+
+
+        //POST API FOR CARS
+        app.post('/cars',async(req,res)=>{
+            const car = req.body;
+            const result = await carCollection.insertOne(car);
+            console.log(result);
+            res.json(result);
+        })
+
         //GET BOOKING DETAILS
        app.get('/cars/:id', async(req, res) =>{
            const id = req.params.id;
@@ -36,6 +47,12 @@ async function run(){
            const car = await carCollection.findOne(query);
            res.json(car);
        })
+
+       app.get('/bookings', async(req,res) =>{
+        const cursor = bookingCollection.find({});
+        const booking = await cursor.toArray();
+        res.send(booking);
+    })
 
        //GET API Bookings
         app.get('/bookings',async(req,res)=>{
@@ -89,6 +106,40 @@ async function run(){
             const result = await usersCollection.updateOne(filter,updateDoc);
             res.json(result);
 
+        })
+
+        //GET REVIEWS
+        app.get('/reviews', async(req,res) =>{
+            const cursor = reviewsCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        })
+
+        //POST REVIEWS
+        app.post('/reviews',async(req,res)=>{
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            console.log(result);
+            res.json(result);
+        })
+
+
+        //DELETE ORDERS
+        app.delete('/bookings/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await bookingCollection.deleteOne(query);
+            console.log('delete',result);
+            res.json(result);
+        })
+
+        //DELETE PRODUCTS
+        app.delete('/cars/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await carCollection.deleteOne(query);
+            console.log('delete',result);
+            res.json(result);
         })
     }
     finally{
