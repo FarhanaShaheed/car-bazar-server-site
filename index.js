@@ -55,12 +55,10 @@ async function run(){
     })
 
        //GET API Bookings
-        app.get('/bookings',async(req,res)=>{
-            const email = req.query.email;
-            const query = {email:email}
-            const cursor = bookingCollection.find(query);
-            const bookings = await cursor.toArray();
-            res.json(bookings);
+        app.get('/bookings/:email',async(req,res)=>{
+            const email = req.params.email
+            const result = await bookingCollection.find({ email: email }).toArray();
+            res.send(result);
         })
 
 
