@@ -69,6 +69,20 @@ async function run(){
             console.log(result);
             res.json(result);
         });
+        //UPDATE BOOKING STATUS
+        app.put('/updateStatus/:id',async(req,res) =>{
+            const id = req.params.id;
+            const status = req.body.status;
+            const filter = {_id: ObjectId(id)};
+            const options = {upsert:true};
+            const updateDoc = {
+                $set:{
+                    status: status
+                },
+            };
+            const result = await bookingCollection.updateOne(filter,updateDoc,options);
+            res.json(result);
+        })
 
         app.get('/users/:email', async(req, res) =>{
             const email = req.params.email;
