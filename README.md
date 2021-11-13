@@ -1,11 +1,11 @@
 # niche-website-server-side-FarhanaShaheed
 niche-website-server-side-FarhanaShaheed created by GitHub Classroom
 
-##Post car:
+## Post car:
 
 admin need to add cars in the list so i have use POST api to set the data in the database
 
-###Get car:
+### Get car:
 
 after the post the cars will not able to shown in the website. so i have used GET to show the data in the UI.
 
